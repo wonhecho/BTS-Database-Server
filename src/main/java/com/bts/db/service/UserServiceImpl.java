@@ -43,9 +43,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public HashMap<String,String> findById(Long id) {
-        User user =  userRepository.findById(id).orElse(null);
+        User user =  userRepository.findById(id).orElse(User.builder().name("null").build());
         HashMap<String,String> result = new HashMap<>();
-        result.put("address",user.getCoinWallet());
+        if(user.getName().equals("null") || user.getCoinWallet() == null)
+        {
+            result.put("address","");
+        }
+        else {
+            result.put("address", user.getCoinWallet());
+        }
         return result;
     }
 
